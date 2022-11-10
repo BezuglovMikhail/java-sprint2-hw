@@ -8,10 +8,11 @@ public class YearlyReport {
     public int sumExpenses;
     public int sumIncome;
 
-    public YearlyReport(int year, String path) {
+    public YearlyReport(int year) {
         this.year = year;
 
-        String content = ReadFile.ReadFileContentsOrNull(path);
+        String yearPath = "resources/y." + year + ".csv";
+        String content = ReadFile.ReadFileContentsOrNull(yearPath);
         String[] lines = content.split("\r?\n");
 
         for (int i = 1; i < lines.length; i++) {
@@ -21,7 +22,7 @@ public class YearlyReport {
             int sum = Integer.parseInt(parts[1]);
             boolean isExpense = Boolean.parseBoolean(parts[2]);
 
-           if (!monthsData.containsKey(month)) {
+            if (!monthsData.containsKey(month)) {
                 monthsData.put(month, new MonthlyReport(month));
             }
             MonthlyReport oneMonthData = monthsData.get(month);
@@ -36,15 +37,15 @@ public class YearlyReport {
             sumExpenses += oneMonthData.expenses;
             sumIncome += oneMonthData.incomes;
         }
-     }
+    }
 
     void printInfoYearlyReport() {
         System.out.println("Отчёт за " + year + " год: ");
         sumProfit();
         System.out.println("Средний расход за все месяцы в году составил: " + sumIncome / 12);
-        System.out.println("Средний доход за все месяцы в году составил: " +  sumExpenses / 12);
+        System.out.println("Средний доход за все месяцы в году составил: " + sumExpenses / 12);
         System.out.println();
-        }
+    }
 
     public ArrayList<String> report() {
         ArrayList<String> yearContents = new ArrayList<>();
@@ -61,17 +62,8 @@ public class YearlyReport {
 
         for (MonthlyReport oneMonthData : monthsData.values()) {
             profit = oneMonthData.incomes - oneMonthData.expenses;
-            String nameMonth = "";
 
-            if (oneMonthData.month == 1) {
-                nameMonth = "Январь";
-            } else if (oneMonthData.month == 2) {
-                nameMonth = "Февраль";
-            } else if (oneMonthData.month == 3) {
-                nameMonth = "Март";
-            }
-
-            System.out.println("Прибыль за " + nameMonth + " составила: " + profit); /// добавить месяц.
+            System.out.println("Прибыль за " + oneMonthData.nameMonth[oneMonthData.month] + " составила: " + profit); /// добавить месяц.
         }
     }
 }

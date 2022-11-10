@@ -4,35 +4,35 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String yearPath = "resources/y.2021.csv";
         int year = 2021;
-        YearlyReport reportYear = new YearlyReport(year, yearPath);
-        MonthlyReport reportMonthOne = new MonthlyReport(1);
 
         while (true) {
-
             printMenu();
             int command = scanner.nextInt();
 
             if (command == 1) {
+                MonthlyReport reportMonthOne = new MonthlyReport();
+                reportMonthOne.monthPathContent();
                 reportMonthOne.allMonthReport();
-            }
-            else if (command == 2) {
-               System.out.println(reportYear.report());
-            }
-            else if (command == 3) {
-                ReconciliationReport.reconciliationReport();
-            }
-            else if (command == 4) {
-                reportMonthOne.printInfoMonthlyReport();
-            }
-            else if (command == 5) {
+            } else if (command == 2) {
+                YearlyReport reportYear = new YearlyReport(year);
+                System.out.println(reportYear.report());
+            } else if (command == 3) {
+                MonthlyReport reportMonthOne = new MonthlyReport();
+                YearlyReport reportYear = new YearlyReport(year);
+                ReconciliationReport reconciliationReport = new ReconciliationReport(reportMonthOne, reportYear);
+                reconciliationReport.reconciliationReport();
+            } else if (command == 4) {
+                MonthlyReport reportMonthOne = new MonthlyReport();
+                reportMonthOne.monthPathContent();
+                reportMonthOne.infoMonthlyReport();
+                reportMonthOne.monthPathContent();
+            } else if (command == 5) {
+                YearlyReport reportYear = new YearlyReport(year);
                 reportYear.printInfoYearlyReport();
-            }
-            else if (command == 0) {
+            } else if (command == 0) {
                 break;
-            }
-            else {
+            } else {
                 System.out.println("Такой команды пока нет(");
             }
         }
