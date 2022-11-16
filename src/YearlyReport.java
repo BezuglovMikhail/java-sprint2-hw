@@ -1,16 +1,17 @@
 import java.util.HashMap;
-import java.util.ArrayList;
 
 public class YearlyReport {
     public int year;
     public final int YEAR_COUNT = 1;
-    public HashMap<Integer, MonthlyReport> monthsData = new HashMap<>();
+    public HashMap<Integer, InfoYearlyReport> monthsData = new HashMap<>();
     public int sumExpenses;
     public int sumIncome;
 
     public YearlyReport(int year) {
         this.year = year;
+    }
 
+    public void calculationYearlyReport() {
         String yearPath = "resources/y." + year + ".csv";
         String content = ReadFile.ReadFileContentsOrNull(yearPath);
         String[] lines = content.split("\r?\n");
@@ -23,9 +24,9 @@ public class YearlyReport {
             boolean isExpense = Boolean.parseBoolean(parts[2]);
 
             if (!monthsData.containsKey(month)) {
-                monthsData.put(month, new MonthlyReport(month));
+                monthsData.put(month, new InfoYearlyReport(month));
             }
-            MonthlyReport oneMonthData = monthsData.get(month);
+            InfoYearlyReport oneMonthData = monthsData.get(month);
             if (isExpense) {
                 oneMonthData.expenses += sum;
             } else {
@@ -33,38 +34,38 @@ public class YearlyReport {
             }
         }
 
-        for (MonthlyReport oneMonthData : monthsData.values()) {
+        for (InfoYearlyReport oneMonthData : monthsData.values()) {
             sumExpenses += oneMonthData.expenses;
             sumIncome += oneMonthData.incomes;
         }
     }
 
-    void printInfoYearlyReport() {
-        System.out.println("Отчёт за " + year + " год: ");
-        sumProfit();
-        System.out.println("Средний расход за все месяцы в году составил: " + sumIncome / 12);
-        System.out.println("Средний доход за все месяцы в году составил: " + sumExpenses / 12);
-        System.out.println();
-    }
-
-    public ArrayList<String> report() {
-        ArrayList<String> yearContents = new ArrayList<>();
+    public String report() {
+        String content = null;
         for (int y = 1; y <= YEAR_COUNT; y++) {
             String yearPath = "resources/y.202" + y + ".csv";
-            String content = ReadFile.ReadFileContentsOrNull(yearPath);
-            yearContents.add(content);
+            content = ReadFile.ReadFileContentsOrNull(yearPath);
         }
-        return yearContents;
+        return content;
     }
 
     public void sumProfit() {
-        int profit;
-
-        for (MonthlyReport oneMonthData : monthsData.values()) {
-            profit = oneMonthData.incomes - oneMonthData.expenses;
-
-            System.out.println("Прибыль за " + oneMonthData.nameMonth[oneMonthData.month] + " составила: " + profit); /// добавить месяц.
+        for (InfoYearlyReport oneMonthData : monthsData.values()) {
+            oneMonthData.profit = oneMonthData.incomes - oneMonthData.expenses;
         }
+    }
+
+    void printInfoYearlyReport() {
+        InfoYearlyReport oneMonthData = null;
+        System.out.println("Отчёт за " + year + " год: ");
+        sumProfit();
+        for (int month = 1; month <= 3; month++) {
+            oneMonthData = monthsData.get(month);
+            System.out.println("Прибыль за " + MonthlyReport.nameMonth[oneMonthData.month - 1] + " составила: " + oneMonthData.profit);
+        }
+        System.out.println("Средний расход за все месяцы в году составил: " + sumExpenses / 12);
+        System.out.println("Средний доход за все месяцы в году составил: " + sumIncome / 12);
+        System.out.println();
     }
 }
 

@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 
 public class Main {
@@ -5,30 +6,29 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int year = 2021;
-
+        int month = 1;
         while (true) {
             printMenu();
             int command = scanner.nextInt();
 
             if (command == 1) {
-                MonthlyReport reportMonthOne = new MonthlyReport();
-                reportMonthOne.monthPathContent();
+                MonthlyReport reportMonthOne = new MonthlyReport(month);
                 reportMonthOne.allMonthReport();
+                reportMonthOne.printReport();
             } else if (command == 2) {
-                YearlyReport reportYear = new YearlyReport(year);
-                System.out.println(reportYear.report());
+                YearlyReport yearlyReport = new YearlyReport(year);
+                yearlyReport.calculationYearlyReport();
+                System.out.println(yearlyReport.report());
             } else if (command == 3) {
-                MonthlyReport reportMonthOne = new MonthlyReport();
-                YearlyReport reportYear = new YearlyReport(year);
-                ReconciliationReport reconciliationReport = new ReconciliationReport(reportMonthOne, reportYear);
+                ReconciliationReport reconciliationReport = new ReconciliationReport();
                 reconciliationReport.reconciliationReport();
             } else if (command == 4) {
-                MonthlyReport reportMonthOne = new MonthlyReport();
-                reportMonthOne.monthPathContent();
-                reportMonthOne.infoMonthlyReport();
-                reportMonthOne.monthPathContent();
+                MonthlyReport reportMonthOne = new MonthlyReport(month);
+                reportMonthOne.allMonthReport();
+                reportMonthOne.printInfoMonthlyReport();
             } else if (command == 5) {
                 YearlyReport reportYear = new YearlyReport(year);
+                reportYear.calculationYearlyReport();
                 reportYear.printInfoYearlyReport();
             } else if (command == 0) {
                 break;
