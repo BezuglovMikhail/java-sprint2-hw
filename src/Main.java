@@ -1,35 +1,31 @@
-
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
         int year = 2021;
         int month = 1;
+        MonthlyReport monthlyReport = new MonthlyReport(month);
+        YearlyReport yearlyReport = new YearlyReport(year);
+        Scanner scanner = new Scanner(System.in);
+
         while (true) {
             printMenu();
             int command = scanner.nextInt();
-
             if (command == 1) {
-                MonthlyReport reportMonthOne = new MonthlyReport(month);
-                reportMonthOne.allMonthReport();
-                reportMonthOne.printReport();
+                monthlyReport.allMonthReport();
+                monthlyReport.printReport();
             } else if (command == 2) {
-                YearlyReport yearlyReport = new YearlyReport(year);
                 yearlyReport.calculationYearlyReport();
-                System.out.println(yearlyReport.report());
+                yearlyReport.report();
+                System.out.println(yearlyReport.monthsData.get(month).yearlyContent);
             } else if (command == 3) {
                 ReconciliationReport reconciliationReport = new ReconciliationReport();
-                reconciliationReport.reconciliationReport();
+                reconciliationReport.reconciliationReport(yearlyReport, monthlyReport);
             } else if (command == 4) {
-                MonthlyReport reportMonthOne = new MonthlyReport(month);
-                reportMonthOne.allMonthReport();
-                reportMonthOne.printInfoMonthlyReport();
+                monthlyReport.printInfoMonthlyReport();
             } else if (command == 5) {
-                YearlyReport reportYear = new YearlyReport(year);
-                reportYear.calculationYearlyReport();
-                reportYear.printInfoYearlyReport();
+                yearlyReport.printInfoYearlyReport();
             } else if (command == 0) {
                 break;
             } else {

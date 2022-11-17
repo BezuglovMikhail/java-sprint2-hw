@@ -76,7 +76,7 @@ public class MonthlyReport {
                         nameMaxExpenseItem = nameExpense.get(sumExpenseMonth.indexOf(maxExpenseItem));
                     }
                 }
-                oneMonthData.sumIncomeMonth = sumIncome;                                                        // Артём, спасибо! С отладчиком, гораздо проще отлавливать ошибки!
+                oneMonthData.sumIncomeMonth = sumIncome;
                 oneMonthData.sumExpenseMonth = sumExpense;
                 oneMonthData.maxIncomeMonth = maxIncomeItem;
                 oneMonthData.maxExpenseMonth = maxExpenseItem;
@@ -99,16 +99,22 @@ public class MonthlyReport {
     }
 
     public void printInfoMonthlyReport() {
-        for (int month = 1; month <= monthsReportData.size(); month++) {
-            int maxIncomeMonth = monthsReportData.get(month).maxIncomeMonth;
-            String nameMaxIncome = monthsReportData.get(month).nameMaxIncomeMonth;
-            int maxExpense = monthsReportData.get(month).maxExpenseMonth;
-            String nameMaxExpense = monthsReportData.get(month).nameMaxExpenseMonth;
 
-            System.out.println(nameMonth[month - 1]);
-            System.out.println("Самый прибыльный товар: " + nameMaxIncome + " - продан на сумму: " + maxIncomeMonth);
-            System.out.println("Самая большая трата: " + nameMaxExpense + " - потрачено: " + maxExpense);
+        if (monthsReportData.size() == 0) {
+            System.out.println("Считайте отчеты за месяц!");
             System.out.println();
+        } else {
+            for (int month = 1; month <= monthsReportData.size(); month++) {
+                int maxIncomeMonth = monthsReportData.get(month).maxIncomeMonth;
+                String nameMaxIncome = monthsReportData.get(month).nameMaxIncomeMonth;
+                int maxExpense = monthsReportData.get(month).maxExpenseMonth;
+                String nameMaxExpense = monthsReportData.get(month).nameMaxExpenseMonth;
+
+                System.out.println(nameMonth[month - 1]);
+                System.out.println("Самый прибыльный товар: " + nameMaxIncome + " - продан на сумму: " + maxIncomeMonth);
+                System.out.println("Самая большая трата: " + nameMaxExpense + " - потрачено: " + maxExpense);
+                System.out.println();
+            }
         }
     }
 }

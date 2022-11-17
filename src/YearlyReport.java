@@ -40,13 +40,16 @@ public class YearlyReport {
         }
     }
 
-    public String report() {
+    public void report() {
         String content = null;
+        InfoYearlyReport oneMonthData = null;
         for (int y = 1; y <= YEAR_COUNT; y++) {
             String yearPath = "resources/y.202" + y + ".csv";
             content = ReadFile.ReadFileContentsOrNull(yearPath);
+            oneMonthData = monthsData.get(y);
+            oneMonthData.yearlyContent = content;
+            monthsData.put(y, oneMonthData);
         }
-        return content;
     }
 
     public void sumProfit() {
@@ -56,16 +59,22 @@ public class YearlyReport {
     }
 
     void printInfoYearlyReport() {
-        InfoYearlyReport oneMonthData = null;
-        System.out.println("Отчёт за " + year + " год: ");
-        sumProfit();
-        for (int month = 1; month <= 3; month++) {
-            oneMonthData = monthsData.get(month);
-            System.out.println("Прибыль за " + MonthlyReport.nameMonth[oneMonthData.month - 1] + " составила: " + oneMonthData.profit);
+        InfoYearlyReport oneMonthData;
+
+        if (monthsData.size() == 0) {
+            System.out.println("Считайте годовой отчёт!");
+            System.out.println();
+        } else {
+            System.out.println("Отчёт за " + year + " год: ");
+            sumProfit();
+            for (int month = 1; month <= monthsData.size(); month++) {
+                oneMonthData = monthsData.get(month);
+                System.out.println("Прибыль за " + MonthlyReport.nameMonth[oneMonthData.month - 1] + " составила: " + oneMonthData.profit);
+            }
+            System.out.println("Средний расход за все месяцы в году составил: " + sumExpenses / 12);
+            System.out.println("Средний доход за все месяцы в году составил: " + sumIncome / 12);
+            System.out.println();
         }
-        System.out.println("Средний расход за все месяцы в году составил: " + sumExpenses / 12);
-        System.out.println("Средний доход за все месяцы в году составил: " + sumIncome / 12);
-        System.out.println();
     }
 }
 

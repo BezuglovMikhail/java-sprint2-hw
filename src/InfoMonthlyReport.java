@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class InfoMonthlyReport {
 
@@ -10,7 +8,4 @@ public class InfoMonthlyReport {
     public int maxExpenseMonth;
     public String nameMaxIncomeMonth;
     public String nameMaxExpenseMonth;
-
 }
-
-
