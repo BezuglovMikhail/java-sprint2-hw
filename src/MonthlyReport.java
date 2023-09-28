@@ -3,10 +3,16 @@ import java.util.HashMap;
 
 public class MonthlyReport {
     public static final int MONTHS_COUNT = 12;
+
+    public static final String MONTHLY_FILE = "resources/m.20210";
+
+    public static final String FILE_EXTENSION = ".csv";
+
     HashMap<Integer, InfoMonthlyReport> monthsReportData = new HashMap<>();
     int month;
 
-    static String[] nameMonth = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
+    static String[] nameMonth = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь",
+            "Октябрь", "Ноябрь", "Декабрь"};
 
     public MonthlyReport(int month) {
         this.month = month;
@@ -15,7 +21,7 @@ public class MonthlyReport {
     public void allMonthReport() {
         for (int month = 1; month <= MONTHS_COUNT; month++) {
             InfoMonthlyReport oneMonthData = new InfoMonthlyReport();
-            String monthPath = "resources/m.20210" + month + ".csv";
+            String monthPath = MONTHLY_FILE + month + FILE_EXTENSION;
             String content = ReadFile.ReadFileContentsOrNull(monthPath);
             ArrayList<Integer> sumIncomeMonth;
             ArrayList<Integer> sumExpenseMonth;
@@ -27,8 +33,8 @@ public class MonthlyReport {
             String nameMaxExpenseItem = "";
 
             if (content == null) {
-                //System.out.println("Добавьте отчет за " + nameMonth[month - 1]);
-                //System.out.println();
+                System.out.println("Добавьте отчет за " + nameMonth[month - 1]);
+                System.out.println();
             } else {
                 oneMonthData.monthContents = content;
                 monthsReportData.put(month, oneMonthData);
@@ -88,13 +94,9 @@ public class MonthlyReport {
     }
 
     public void printReport() {
-        for (int month = 1; month <= monthsReportData.size(); month++) {  //monthsReportData.size()
-
-            if (monthsReportData == null) {
-            } else {
+        for (int month = 1; month <= monthsReportData.size(); month++) {
                 String content = monthsReportData.get(month).monthContents;
                 System.out.println(content);
-            }
         }
     }
 
@@ -118,5 +120,3 @@ public class MonthlyReport {
         }
     }
 }
-
-
