@@ -28,7 +28,7 @@ public class ReconciliationReport {
                 }
             }
             if (!(comparingIncome || comparingExpense)) {
-                System.out.println("Ошибок не обнаружено! Сверка успешно завершина!");
+                System.out.println("Ошибок не обнаружено! Сверка успешно завершена!");
             }
         }
     }

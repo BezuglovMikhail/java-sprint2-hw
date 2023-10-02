@@ -12,6 +12,7 @@ public class Main {
         while (true) {
             printMenu();
             int command = scanner.nextInt();
+
             if (command == 1) {
                 monthlyReport.allMonthReport();
                 monthlyReport.printReport();
@@ -44,5 +45,3 @@ public class Main {
         System.out.println("0 - Выход");
     }
 }
-
-
